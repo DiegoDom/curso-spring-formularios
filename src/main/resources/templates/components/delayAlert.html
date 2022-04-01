@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<section th:fragment="delayAlert">
+		<div class="alert alert-warning" role="alert" th:if="${tiempoTranscurrido != null}">
+			<h4 class="alert-heading">Tiempo transcurrido</h4>
+			<span th:text="${tiempoTranscurrido} + ' ms'"></span>
+		</div>
+	</section >
+</body>
+
+</html>

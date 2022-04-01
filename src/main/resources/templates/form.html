@@ -3,12 +3,15 @@
 
 <head>
 	<meta charset="UTF-8" />
-	<title>SPRING | FORMS</title>
+	<title th:text="${titulo}"></title>
 	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 
 <body>
-	<div class="container mt-1">
+	<div class="container mt-3">
+		
+		<section th:replace="components/delayAlert :: delayAlert"></section >
+
 		<h3 th:text="${titulo}"></h3>
 		<form th:action="@{/form}" method="post" th:object="${usuario}">
 			<input type="hidden" id="secret" th:field="*{secret}" />
