@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -42,13 +43,13 @@ public class FormController {
 
 	@Autowired
 	private CountryService countryService;
-	
+
 	@Autowired
 	private RoleService roleService;
 
 	@Autowired
 	private CountryPropertyEditor countryEditor;
-	
+
 	@Autowired
 	private RolesEditor roleEditor;
 
@@ -64,6 +65,11 @@ public class FormController {
 		binder.registerCustomEditor(String.class, "lastname", new CapitalizeEditor());
 		binder.registerCustomEditor(Country.class, "country", countryEditor);
 		binder.registerCustomEditor(Role.class, "roles", roleEditor);
+	}
+
+	@ModelAttribute("genders")
+	public List<String> genders() {
+		return Arrays.asList("male", "female", "other");
 	}
 
 	@ModelAttribute("countriesList")
@@ -91,7 +97,7 @@ public class FormController {
 
 		return countries;
 	}
-	
+
 	@ModelAttribute("rolesList")
 	public List<Role> rolesList() {
 		return roleService.listar();
@@ -106,7 +112,7 @@ public class FormController {
 
 		return roles;
 	}
-	
+
 	@ModelAttribute("rolesListMap")
 	public Map<String, String> rolesListMap() {
 
@@ -127,6 +133,11 @@ public class FormController {
 		usuario.setLastname("Dominguez");
 		usuario.setEmail("ddominguez@gmail.com");
 		usuario.setIdentifier("23.456.789-D");
+		usuario.setSubscribe(true);
+		usuario.setSecret("aasfa2faff.121@da");
+		
+		usuario.setCountry(new Country(2, "MX", "México"));
+		usuario.setRoles(Arrays.asList(new Role(3,"Usuario","ROLE_USER")));
 
 		model.addAttribute("titulo", "Create user");
 		model.addAttribute("usuario", usuario);
@@ -135,7 +146,7 @@ public class FormController {
 
 	@PostMapping("/form")
 	// BindingResult result SIEMPRE se ubica al lado del objeto que se valida
-	public String procesar(@Valid Usuario usuario, BindingResult result, Model model, SessionStatus status) {
+	public String procesar(@Valid Usuario usuario, BindingResult result, Model model) {
 
 		// validador.validate(usuario, result);
 
@@ -154,10 +165,41 @@ public class FormController {
 
 			return "form";
 		}
-
+		
+		return "redirect:/ver";
+	}
+	
+	@GetMapping("/ver")
+	public String ver(@SessionAttribute(name="usuario", required = false) Usuario usuario, Model model, SessionStatus status) {
+		
+		if (usuario == null) {
+			return "redirect:/form";
+		}
+		
 		model.addAttribute("titulo", " Form result");
-		model.addAttribute("usuario", usuario);
+		
 		status.setComplete();
 		return "resultado";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

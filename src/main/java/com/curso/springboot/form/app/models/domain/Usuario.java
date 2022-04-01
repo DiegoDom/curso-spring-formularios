@@ -56,6 +56,13 @@ public class Usuario {
 	@NotEmpty(message = "Select at leats one role")
 	private List<Role> roles;
 
+	private Boolean subscribe;
+
+	@NotEmpty
+	private String gender;
+
+	private String secret;
+
 	public String getUsername() {
 		return username;
 	}
@@ -134,6 +141,30 @@ public class Usuario {
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+
+	public Boolean getSubscribe() {
+		return subscribe;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public void setSubscribe(Boolean subscribe) {
+		this.subscribe = subscribe;
+	}
+
+	public String getSecret() {
+		return secret;
+	}
+
+	public void setSecret(String secret) {
+		this.secret = secret;
 	}
 
 }

@@ -1,30 +1,44 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8" />
-<title th:text="${titulo}"></title>
+	<meta charset="UTF-8" />
+	<title th:text="${titulo}"></title>
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
+
 <body>
-	<h3 th:text="${titulo}"></h3>
+	<div class="container mt-1">
+		
+		<div class="d-flex justify-content-between align-items-center">
+			<h3 th:text="${titulo}"></h3>
+			<a th:href="@{/form}" class="btn btn-sm btn-outline-primary">Regresar</a >
+		</div >
 
-	<ul>
-		<li th:text="${usuario.identifier}"></li>
-		<li th:text="${usuario.name}"></li>
-		<li th:text="${usuario.lastname}"></li>
-		<li th:text="${usuario.country.code}"></li>
-		<li th:text="${usuario.country.name}"></li>
-		<li th:text="${usuario.username}"></li>
-		<li th:text="${usuario.email}"></li>
-		<li th:text="${usuario.password}"></li>
-		<li th:text="${usuario.account}"></li>
-		<li th:text="${#dates.format(usuario.bornDate,'dd/MM/yyyy')}"></li>
-	</ul>
+		<ul class="list-group">
+			<li class="list-group-item" th:text="'Identifier: ' + ${usuario.identifier}"></li>
+			<li class="list-group-item" th:text="'Name: ' + ${usuario.name}"></li>
+			<li class="list-group-item" th:text="'Lastname: ' + ${usuario.lastname}"></li>
+			<li class="list-group-item" th:text="'Gender: ' + ${usuario.gender}"></li>
+			<li class="list-group-item" th:text="'Country: ' + ${usuario.country.name} + '(' + ${usuario.country.code} + ')'"></li>
+			<li class="list-group-item" th:text="'Username: ' + ${usuario.username}"></li>
+			<li class="list-group-item" th:text="'Email: ' + ${usuario.email}"></li>
+			<li class="list-group-item" th:text="'Password: ' + ${usuario.password}"></li>
+			<li class="list-group-item" th:text="'Account no°: ' + ${usuario.account}"></li>
+			<li class="list-group-item" th:text="'Birthday: ' + ${#dates.format(usuario.bornDate,'dd/MM/yyyy')}"></li>
+			<li class="list-group-item" th:text="'Subscribe to news letter: ' + ${usuario.subscribe}"></li>
+			<li class="list-group-item" th:text="'Identifier: ' + ${usuario.secret}"></li>
 
-	<div>Roles</div>
-	<ul>
-		<li th:each="role: ${usuario.roles}"
-			th:text="${role.name} + ' (' + ${role.role} + ')'"></li>
-	</ul>
+		</ul>
+
+		<h4 class="mt-3">Roles</h4>
+		<ul class="list-group">
+			<li class="list-group-item" th:each="role: ${usuario.roles}"
+				th:text="${role.name} + ' (' + ${role.role} + ')'"></li>
+		</ul>
+	</div>
+
 
 </body>
+
 </html>
